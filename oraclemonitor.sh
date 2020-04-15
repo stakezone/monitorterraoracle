@@ -86,7 +86,7 @@ while true; do
         nmissedstart=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedstart)
         nmissedend=$($terracli query oracle miss $validatorpubkey --chain-id $chainid)
         nmissedend=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedend)
-        if [ $nmissedoraclevotes -eq 0 ]; then pctvotes="1.0"; else pctvotes=$(echo "scale=2 ; ($nmissedoraclevotes + $nmissedend - $nmissedstart) / $nmissedoraclevotes" | bc); fi
+        if [ $nmissedoraclevotes -eq 0 ]; then pctvotes="1.0"; else pctvotes=$(echo "scale=2 ; ($nmissedoraclevotes - $nmissedend + $nmissedstart) / $nmissedoraclevotes" | bc); fi
 
         amountukrw=$($terracli query account $feeder --chain-id $chainid | grep -A 1 "denom: ukrw" | tail -1 | awk -F'"' '{print $2}')
 
