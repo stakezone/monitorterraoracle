@@ -1,7 +1,4 @@
-
 #!/bin/bash
-
-set -e
 
 #####    Packages required: jq, bc
 
@@ -93,6 +90,8 @@ while true; do
         if [ $nmissedoraclevotes -eq 0 ]; then pctmissedvotes="1.0"; else pctmissedvotes=$(echo "scale=2 ; $nmissedstart / $nmissedend" | bc); fi
 
         amountukrw=$($terracli query account $feeder --chain-id $chainid | grep -A 1 "denom: ukrw" | tail -1 | awk -F'"' '{print $2}')
+
+        now=$(date --rfc-3339=seconds)
 
         logentry="$now status=$catchingup blockheight=$blockheight nmissedvotes=$nmissedend pctmissedvotes=$pctmissedvotes amtukrw=$amountukrw"
         echo "$logentry" >>$logfile

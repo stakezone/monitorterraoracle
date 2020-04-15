@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-04-15T00:08:24Z</date>
+    <groups>
+        <group>
+            <name>Templates/Applications</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App Terra Oracle</template>
+            <name>Template App Terra Oracle</name>
+            <description>Terra Oracle add-on for Cosmos Gaiad Monitor</description>
+            <groups>
+                <group>
+                    <name>Templates/Applications</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Terra Oracle</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>terra oracle  amtukrw</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>logrt[{$TOLOGFILE},&quot;amtukrw=([0-9\.]*)&quot;,,,skip,\1,]</key>
+                    <delay>{$TOUPDATEINTERVAL}</delay>
+                    <history>5d</history>
+                    <trends>0</trends>
+                    <value_type>LOG</value_type>
+                    <description>amount of ukrw on feeder address</description>
+                    <applications>
+                        <application>
+                            <name>Terra Oracle</name>
+                        </application>
+                    </applications>
+                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;{$TOAMTUKRW}</expression>
+                            <name>{$TONODEID} amtukrw &lt; {$TOAMTUKRW} : amt={ITEM.VALUE}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>terra oracle %missedvotes</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>logrt[{$TOLOGFILE},&quot;pctmissedvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
+                    <delay>{$TOUPDATEINTERVAL}</delay>
+                    <history>5d</history>
+                    <trends>0</trends>
+                    <value_type>LOG</value_type>
+                    <description>percentage of last n missed votes</description>
+                    <applications>
+                        <application>
+                            <name>Terra Oracle</name>
+                        </application>
+                    </applications>
+                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;=0.5</expression>
+                            <name>{$TONODEID} 0.5 &gt;= %missedvotes : pct={ITEM.VALUE}</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}&lt;0.95 and {last()}&gt;0.5</expression>
+                            <name>{$TONODEID} 0.95 &gt; %missedvotes &gt; 0.5 : pct={ITEM.VALUE}</name>
+                            <priority>WARNING</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                        <trigger>
+                            <expression>{last()}&lt;1 and {last()}&gt;=0.95</expression>
+                            <name>{$TONODEID} 1.0 &gt; %missedvotes &gt;= 0.95 : pct={ITEM.VALUE}</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>terra oracle status</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>logrt[{$TOLOGFILE},&quot;status=(\w*)&quot;,,,skip,\1,]</key>
+                    <delay>{$TOUPDATEINTERVAL}</delay>
+                    <history>5d</history>
+                    <trends>0</trends>
+                    <value_type>LOG</value_type>
+                    <description>scriptstarted | error | catchingup | synced&#13;
+&#13;
+error can have various causes, typically the gaiad process is down. This value is only monitored for log data availability.</description>
+                    <applications>
+                        <application>
+                            <name>Terra Oracle</name>
+                        </application>
+                    </applications>
+                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
+                    <triggers>
+                        <trigger>
+                            <expression>{nodata(120)}=1</expression>
+                            <name>{$TONODEID} no log data : T &gt; {$TONODATA}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$TOAMTUKRW}</macro>
+                    <value>10000000</value>
+                    <description>min amount of ukrw on feeder address</description>
+                </macro>
+                <macro>
+                    <macro>{$TOLOGFILE}</macro>
+                    <description>Location of the nodemonitor log file on the host, example: /home/user/monitorterraoracle/oraclemonitor-terra.log</description>
+                </macro>
+                <macro>
+                    <macro>{$TONODATA}</macro>
+                    <value>120</value>
+                    <description>Time is seconds for no data received trigger</description>
+                </macro>
+                <macro>
+                    <macro>{$TONODEID}</macro>
+                    <value>Terra Oracle</value>
+                    <description>Identifier for the node on the server (useful if more than one are hosted).</description>
+                </macro>
+                <macro>
+                    <macro>{$TOUPDATEINTERVAL}</macro>
+                    <value>2s</value>
+                    <description>update interval for items</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
+
