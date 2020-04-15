@@ -47,7 +47,7 @@
                     </triggers>
                 </item>
                 <item>
-                    <name>terra oracle %missedvotes</name>
+                    <name>terra oracle %votes</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>logrt[{$TOLOGFILE},&quot;pctvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
                     <delay>{$TOUPDATEINTERVAL}</delay>
@@ -64,19 +64,19 @@
                     <triggers>
                         <trigger>
                             <expression>{last()}&lt;=0.5</expression>
-                            <name>{$TONODEID} 0.5 &gt;= %missedvotes : pct={ITEM.VALUE}</name>
+                            <name>{$TONODEID} 0.5 &gt;= %votes : pct={ITEM.VALUE}</name>
                             <priority>HIGH</priority>
                             <manual_close>YES</manual_close>
                         </trigger>
                         <trigger>
                             <expression>{last()}&lt;0.95 and {last()}&gt;0.5</expression>
-                            <name>{$TONODEID} 0.95 &gt; %missedvotes &gt; 0.5 : pct={ITEM.VALUE}</name>
+                            <name>{$TONODEID} 0.95 &gt; %votes &gt; 0.5 : pct={ITEM.VALUE}</name>
                             <priority>WARNING</priority>
                             <manual_close>YES</manual_close>
                         </trigger>
                         <trigger>
                             <expression>{last()}&lt;1 and {last()}&gt;=0.95</expression>
-                            <name>{$TONODEID} 1.0 &gt; %missedvotes &gt;= 0.95 : pct={ITEM.VALUE}</name>
+                            <name>{$TONODEID} 1.0 &gt; %votes &gt;= 0.95 : pct={ITEM.VALUE}</name>
                             <priority>INFO</priority>
                             <manual_close>YES</manual_close>
                         </trigger>
