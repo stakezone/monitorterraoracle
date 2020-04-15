@@ -21,4 +21,4 @@ The log line entries are:
 
 ### Note
 
-The related template is intended to be deployed alongside nodemonitorgaiad. Triggers are only for pctmissedvotes and amtukrw, and as well for no data received on 'status'.
+The related template is intended to be deployed alongside nodemonitorgaiad. Triggers are only for pctvotes and amtukrw, and as well for no data received on 'status'.
