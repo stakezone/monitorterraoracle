@@ -6,7 +6,8 @@
 config=""              # config.toml file for node, eg. /home/user/.terrad/config/config.toml
 terracli=""            # the terracli binary, eg. /home/user/go/bin/terracli
 validatorpubkey=""     # terravaloper* pubkey, is used to find the feeder address
-nmissedoraclevotes=100  # checks back the missed oracle votes n blocks from blockheight, a value higher than 100 is not supported by terrad
+nmissedoraclevotes=100 # checks back the missed oracle votes n blocks from blockheight, a value higher than 100 is not supported by terrad
+nvoteoffset=5          # 1 vote in 5 blocks, do not alter value when no underlying changes  
 logname=""             # a custom log file name can be chosen, if left empty default is oraclemonitor-<username>.log
 logpath="$(pwd)"       # the directory where the log file is stored, for customization insert path like: /my/path
 logsize=200            # the max number of lines after that the log will be trimmed to reduce its size
@@ -86,7 +87,7 @@ while true; do
         nmissedstart=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedstart)
         nmissedend=$($terracli query oracle miss $validatorpubkey --chain-id $chainid)
         nmissedend=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedend)
-        if [ $nmissedoraclevotes -eq 0 ]; then pctvotes="1.0"; else pctvotes=$(echo "scale=2 ; 1 - (($nmissedend - $nmissedstart) / $nmissedoraclevotes * 5)" | bc); fi
+        if [ $nmissedoraclevotes -eq 0 ]; then pctvotes="1.0"; else pctvotes=$(echo "scale=2 ; 1 - (($nmissedend - $nmissedstart) / $nmissedoraclevotes * $nvoteoffset)" | bc); fi
 
         amountukrw=$($terracli query account $feeder --chain-id $chainid | grep -A 1 "denom: ukrw" | tail -1 | awk -F'"' '{print $2}')
 
