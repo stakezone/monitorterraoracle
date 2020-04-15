@@ -1,4 +1,4 @@
-# nodemonitorgaiad
+# monitorterraoracle
 Terra Oracle add-on for nodemonitorgaiad.
 
 ### Concept
