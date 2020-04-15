@@ -84,16 +84,17 @@ while true; do
 
         nmissedstart=$($terracli query oracle miss $validatorpubkey --chain-id $chainid --height=$(expr $blockheight - $nmissedoraclevotes))
         nmissedstart=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedstart)
+echo $nmissedstart
         nmissedend=$($terracli query oracle miss $validatorpubkey --chain-id $chainid)
         nmissedend=$(sed -e 's/^"//' -e 's/"$//' <<<$nmissedend)
-
-        if [ $nmissedoraclevotes -eq 0 ]; then pctmissedvotes="1.0"; else pctmissedvotes=$(echo "scale=2 ; $nmissedstart / $nmissedend" | bc); fi
+echo $nmissedend
+        if [ $nmissedoraclevotes -eq 0 ]; then pctvotes="1.0"; else pctvotes=$(echo "scale=2 ; ($nmissedoraclevotes + $nmissedend - $nmissedstart) / $nmissedoraclevotes" | bc); fi
 
         amountukrw=$($terracli query account $feeder --chain-id $chainid | grep -A 1 "denom: ukrw" | tail -1 | awk -F'"' '{print $2}')
 
         now=$(date --rfc-3339=seconds)
 
-        logentry="$now status=$catchingup blockheight=$blockheight nmissedvotes=$nmissedend pctmissedvotes=$pctmissedvotes amtukrw=$amountukrw"
+        logentry="$now status=$catchingup blockheight=$blockheight nmissedvotes=$nmissedend pctvotes=$pctvotes amtukrw=$amountukrw"
         echo "$logentry" >>$logfile
     else
         now=$(date --rfc-3339=seconds)
