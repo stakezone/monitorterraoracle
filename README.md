@@ -9,6 +9,7 @@ oraclemonitor.sh produces logs that look like:
 2020-04-14 23:49:44+00:00 status=synced blockheight=1602395 nmissedvotes=12737 pctmissedvotes=.95 amtukrw=779719662
 2020-04-14 23:50:14+00:00 status=synced blockheight=1602400 nmissedvotes=12738 pctmissedvotes=1.00 amtukrw=779716162
 2020-04-14 23:50:44+00:00 status=synced blockheight=1602405 nmissedvotes=12738 pctmissedvotes=1.00 amtukrw=779712662
+```
 
 The log line entries are:
 
