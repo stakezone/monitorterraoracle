@@ -14,8 +14,8 @@ logsize=200            # the max number of lines after that the log will be trim
 sleep1=30              # polls every sleep1 sec
 #####  END CONFIG  ##################################################################################################
 
-if [ $nmissedoraclevotes -gt 100 ]; then
-    echo "nmissedoraclevotes > 100 is not supported by terrad"
+if [ $nmissedoraclevotes -gt 99 ]; then
+    echo "nmissedoraclevotes > 100 is not supported by terrad, 99 is recommended max value"
     exit 1
 fi
 
