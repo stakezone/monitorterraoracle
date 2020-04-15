@@ -16,7 +16,7 @@ The log line entries are:
 * **status** can be {scriptstarted | error | catchingup | synced} 'error' can have various causes, typically the gaiad process is down
 * **blockheight** blockheight from lcd call 
 * **nmissedvotes** total number of missed votes
-* **pctmissedvotes** percentage of last n missed votes from blockheight as configured in nodemonitor.sh
+* **pctmissedvotes** percentage of last n missed votes from blockheight as configured in oraclemonitor.sh
 * **amtukrw** amount of ukrw on feeder address
 
 ### Note
