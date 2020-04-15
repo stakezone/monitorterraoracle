@@ -6,7 +6,7 @@
 config=""              # config.toml file for node, eg. /home/user/.terrad/config/config.toml
 terracli=""            # the terracli binary, eg. /home/user/go/bin/terracli
 validatorpubkey=""     # terravaloper* pubkey, is used to find the feeder address
-nmissedoraclevotes=100 # checks back the missed oracle votes n blocks from blockheight, a value higher than 100 is not supported by terrad
+nmissedoraclevotes=99  # checks back the missed oracle votes n blocks from blockheight, a value higher than 100 is not supported by terrad, 99 is recommended max value
 nvoteoffset=5          # 1 vote in 5 blocks, do not alter value when no underlying changes  
 logname=""             # a custom log file name can be chosen, if left empty default is oraclemonitor-<username>.log
 logpath="$(pwd)"       # the directory where the log file is stored, for customization insert path like: /my/path
