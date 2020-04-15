@@ -49,7 +49,7 @@
                 <item>
                     <name>terra oracle %missedvotes</name>
                     <type>ZABBIX_ACTIVE</type>
-                    <key>logrt[{$TOLOGFILE},&quot;pctmissedvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
+                    <key>logrt[{$TOLOGFILE},&quot;pctvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
                     <delay>{$TOUPDATEINTERVAL}</delay>
                     <history>5d</history>
                     <trends>0</trends>
@@ -137,4 +137,3 @@ error can have various causes, typically the gaiad process is down. This value i
         </template>
     </templates>
 </zabbix_export>
-
