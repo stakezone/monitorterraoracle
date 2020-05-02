@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-04-15T00:08:24Z</date>
+    <date>2020-05-02T08:51:31Z</date>
     <groups>
         <group>
             <name>Templates/Applications</name>
@@ -29,20 +29,18 @@
                     <key>logrt[{$TOLOGFILE},&quot;amtukrw=([0-9\.]*)&quot;,,,skip,\1,]</key>
                     <delay>{$TOUPDATEINTERVAL}</delay>
                     <history>5d</history>
-                    <trends>0</trends>
-                    <value_type>LOG</value_type>
                     <description>amount of ukrw on feeder address</description>
                     <applications>
                         <application>
                             <name>Terra Oracle</name>
                         </application>
                     </applications>
-                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
                     <triggers>
                         <trigger>
                             <expression>{last()}&lt;{$TOAMTUKRW}</expression>
                             <name>{$TONODEID} amtukrw &lt; {$TOAMTUKRW} : amt={ITEM.VALUE}</name>
                             <priority>WARNING</priority>
+                            <manual_close>YES</manual_close>
                         </trigger>
                     </triggers>
                 </item>
@@ -52,15 +50,13 @@
                     <key>logrt[{$TOLOGFILE},&quot;pctvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
                     <delay>{$TOUPDATEINTERVAL}</delay>
                     <history>5d</history>
-                    <trends>0</trends>
-                    <value_type>LOG</value_type>
+                    <value_type>FLOAT</value_type>
                     <description>percentage of last n missed votes</description>
                     <applications>
                         <application>
                             <name>Terra Oracle</name>
                         </application>
                     </applications>
-                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
                     <triggers>
                         <trigger>
                             <expression>{last()}&lt;=0.5</expression>
@@ -89,7 +85,7 @@
                     <delay>{$TOUPDATEINTERVAL}</delay>
                     <history>5d</history>
                     <trends>0</trends>
-                    <value_type>LOG</value_type>
+                    <value_type>CHAR</value_type>
                     <description>scriptstarted | error | catchingup | synced&#13;
 &#13;
 error can have various causes, typically the gaiad process is down. This value is only monitored for log data availability.</description>
@@ -98,12 +94,12 @@ error can have various causes, typically the gaiad process is down. This value i
                             <name>Terra Oracle</name>
                         </application>
                     </applications>
-                    <logtimefmt>yyyy-MM-ddxhh:mm:ss+xx:xx</logtimefmt>
                     <triggers>
                         <trigger>
                             <expression>{nodata(120)}=1</expression>
                             <name>{$TONODEID} no log data : T &gt; {$TONODATA}</name>
                             <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
                         </trigger>
                     </triggers>
                 </item>
@@ -136,4 +132,26 @@ error can have various causes, typically the gaiad process is down. This value i
             </macros>
         </template>
     </templates>
+    <graphs>
+        <graph>
+            <name>terra oracle metrics</name>
+            <graph_items>
+                <graph_item>
+                    <color>199C0D</color>
+                    <item>
+                        <host>Template App Terra Oracle</host>
+                        <key>logrt[{$TOLOGFILE},&quot;pctvotes=([0-9\.]*)&quot;,,,skip,\1,]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Terra Oracle</host>
+                        <key>logrt[{$TOLOGFILE},&quot;amtukrw=([0-9\.]*)&quot;,,,skip,\1,]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
 </zabbix_export>
